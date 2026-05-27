@@ -4,7 +4,7 @@ import { useEffect } from "react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Privacy | Julia Moura" },
+      { title: "Privacy | Marina" },
       { name: "description", content: "Acesso ao conteúdo exclusivo." },
     ],
   }),
