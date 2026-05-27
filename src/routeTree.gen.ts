@@ -10,33 +10,76 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicSyncpayWebhookRouteImport } from './routes/api/public/syncpay-webhook'
+import { Route as ApiPixCreateRouteImport } from './routes/api/pix/create'
+import { Route as ApiPixStatusIdentifierRouteImport } from './routes/api/pix/status.$identifier'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicSyncpayWebhookRoute = ApiPublicSyncpayWebhookRouteImport.update({
+  id: '/api/public/syncpay-webhook',
+  path: '/api/public/syncpay-webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPixCreateRoute = ApiPixCreateRouteImport.update({
+  id: '/api/pix/create',
+  path: '/api/pix/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPixStatusIdentifierRoute = ApiPixStatusIdentifierRouteImport.update({
+  id: '/api/pix/status/$identifier',
+  path: '/api/pix/status/$identifier',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/pix/create': typeof ApiPixCreateRoute
+  '/api/public/syncpay-webhook': typeof ApiPublicSyncpayWebhookRoute
+  '/api/pix/status/$identifier': typeof ApiPixStatusIdentifierRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/pix/create': typeof ApiPixCreateRoute
+  '/api/public/syncpay-webhook': typeof ApiPublicSyncpayWebhookRoute
+  '/api/pix/status/$identifier': typeof ApiPixStatusIdentifierRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/pix/create': typeof ApiPixCreateRoute
+  '/api/public/syncpay-webhook': typeof ApiPublicSyncpayWebhookRoute
+  '/api/pix/status/$identifier': typeof ApiPixStatusIdentifierRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/api/pix/create'
+    | '/api/public/syncpay-webhook'
+    | '/api/pix/status/$identifier'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/api/pix/create'
+    | '/api/public/syncpay-webhook'
+    | '/api/pix/status/$identifier'
+  id:
+    | '__root__'
+    | '/'
+    | '/api/pix/create'
+    | '/api/public/syncpay-webhook'
+    | '/api/pix/status/$identifier'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiPixCreateRoute: typeof ApiPixCreateRoute
+  ApiPublicSyncpayWebhookRoute: typeof ApiPublicSyncpayWebhookRoute
+  ApiPixStatusIdentifierRoute: typeof ApiPixStatusIdentifierRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +91,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/syncpay-webhook': {
+      id: '/api/public/syncpay-webhook'
+      path: '/api/public/syncpay-webhook'
+      fullPath: '/api/public/syncpay-webhook'
+      preLoaderRoute: typeof ApiPublicSyncpayWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/pix/create': {
+      id: '/api/pix/create'
+      path: '/api/pix/create'
+      fullPath: '/api/pix/create'
+      preLoaderRoute: typeof ApiPixCreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/pix/status/$identifier': {
+      id: '/api/pix/status/$identifier'
+      path: '/api/pix/status/$identifier'
+      fullPath: '/api/pix/status/$identifier'
+      preLoaderRoute: typeof ApiPixStatusIdentifierRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiPixCreateRoute: ApiPixCreateRoute,
+  ApiPublicSyncpayWebhookRoute: ApiPublicSyncpayWebhookRoute,
+  ApiPixStatusIdentifierRoute: ApiPixStatusIdentifierRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
