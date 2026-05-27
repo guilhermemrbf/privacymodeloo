@@ -44,7 +44,7 @@ const DEFAULT_CLIENT = {
   phone: "11999999999",
 };
 
-export const Route = createFileRoute("/api/criar-pix")({
+export const Route = createFileRoute("/api/public/criar-pix")({
   server: {
     handlers: {
       OPTIONS: async () => new Response(null, { status: 204, headers: CORS }),

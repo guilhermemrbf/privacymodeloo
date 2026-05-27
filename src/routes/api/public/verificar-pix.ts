@@ -49,7 +49,7 @@ function mapStatus(s: string | undefined): string {
   }
 }
 
-export const Route = createFileRoute("/api/verificar-pix")({
+export const Route = createFileRoute("/api/public/verificar-pix")({
   server: {
     handlers: {
       OPTIONS: async () => new Response(null, { status: 204, headers: CORS }),

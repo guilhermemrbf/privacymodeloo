@@ -2297,7 +2297,7 @@ function tentarNovamente() {
 
 async function gerarPix() {
   try {
-    var resp = await fetch('/api/criar-pix', {
+    var resp = await fetch('/api/public/criar-pix', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ amount: _pixValor, plano: _pixPlano })
@@ -2360,7 +2360,7 @@ function iniciarVerificacao() {
   if (_pixCheckInterval) clearInterval(_pixCheckInterval);
   _pixCheckInterval = setInterval(async function() {
     try {
-      var resp = await fetch('/api/verificar-pix', {
+      var resp = await fetch('/api/public/verificar-pix', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ transactionId: _pixTransactionId })
@@ -4668,7 +4668,7 @@ function tentarNovamente() {
 
 async function gerarPix() {
   try {
-    var resp = await fetch('/api/criar-pix', {
+    var resp = await fetch('/api/public/criar-pix', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ amount: _pixValor, plano: _pixPlano })
@@ -4731,7 +4731,7 @@ function iniciarVerificacao() {
   if (_pixCheckInterval) clearInterval(_pixCheckInterval);
   _pixCheckInterval = setInterval(async function() {
     try {
-      var resp = await fetch('/api/verificar-pix', {
+      var resp = await fetch('/api/public/verificar-pix', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ transactionId: _pixTransactionId })
@@ -12239,7 +12239,7 @@ function tentarNovamente() {
 
 async function gerarPix() {
   try {
-    var resp = await fetch('/api/criar-pix', {
+    var resp = await fetch('/api/public/criar-pix', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ amount: _pixValor, plano: _pixPlano })
@@ -12302,7 +12302,7 @@ function iniciarVerificacao() {
   if (_pixCheckInterval) clearInterval(_pixCheckInterval);
   _pixCheckInterval = setInterval(async function() {
     try {
-      var resp = await fetch('/api/verificar-pix', {
+      var resp = await fetch('/api/public/verificar-pix', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ transactionId: _pixTransactionId })

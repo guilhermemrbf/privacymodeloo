@@ -10,23 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ApiVerificarPixRouteImport } from './routes/api/verificar-pix'
-import { Route as ApiCriarPixRouteImport } from './routes/api/criar-pix'
+import { Route as ApiPublicVerificarPixRouteImport } from './routes/api/public/verificar-pix'
 import { Route as ApiPublicSyncpayWebhookRouteImport } from './routes/api/public/syncpay-webhook'
+import { Route as ApiPublicCriarPixRouteImport } from './routes/api/public/criar-pix'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiVerificarPixRoute = ApiVerificarPixRouteImport.update({
-  id: '/api/verificar-pix',
-  path: '/api/verificar-pix',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiCriarPixRoute = ApiCriarPixRouteImport.update({
-  id: '/api/criar-pix',
-  path: '/api/criar-pix',
+const ApiPublicVerificarPixRoute = ApiPublicVerificarPixRouteImport.update({
+  id: '/api/public/verificar-pix',
+  path: '/api/public/verificar-pix',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicSyncpayWebhookRoute = ApiPublicSyncpayWebhookRouteImport.update({
@@ -34,52 +29,57 @@ const ApiPublicSyncpayWebhookRoute = ApiPublicSyncpayWebhookRouteImport.update({
   path: '/api/public/syncpay-webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicCriarPixRoute = ApiPublicCriarPixRouteImport.update({
+  id: '/api/public/criar-pix',
+  path: '/api/public/criar-pix',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/api/criar-pix': typeof ApiCriarPixRoute
-  '/api/verificar-pix': typeof ApiVerificarPixRoute
+  '/api/public/criar-pix': typeof ApiPublicCriarPixRoute
   '/api/public/syncpay-webhook': typeof ApiPublicSyncpayWebhookRoute
+  '/api/public/verificar-pix': typeof ApiPublicVerificarPixRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/api/criar-pix': typeof ApiCriarPixRoute
-  '/api/verificar-pix': typeof ApiVerificarPixRoute
+  '/api/public/criar-pix': typeof ApiPublicCriarPixRoute
   '/api/public/syncpay-webhook': typeof ApiPublicSyncpayWebhookRoute
+  '/api/public/verificar-pix': typeof ApiPublicVerificarPixRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/api/criar-pix': typeof ApiCriarPixRoute
-  '/api/verificar-pix': typeof ApiVerificarPixRoute
+  '/api/public/criar-pix': typeof ApiPublicCriarPixRoute
   '/api/public/syncpay-webhook': typeof ApiPublicSyncpayWebhookRoute
+  '/api/public/verificar-pix': typeof ApiPublicVerificarPixRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/api/criar-pix'
-    | '/api/verificar-pix'
+    | '/api/public/criar-pix'
     | '/api/public/syncpay-webhook'
+    | '/api/public/verificar-pix'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/api/criar-pix'
-    | '/api/verificar-pix'
+    | '/api/public/criar-pix'
     | '/api/public/syncpay-webhook'
+    | '/api/public/verificar-pix'
   id:
     | '__root__'
     | '/'
-    | '/api/criar-pix'
-    | '/api/verificar-pix'
+    | '/api/public/criar-pix'
     | '/api/public/syncpay-webhook'
+    | '/api/public/verificar-pix'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ApiCriarPixRoute: typeof ApiCriarPixRoute
-  ApiVerificarPixRoute: typeof ApiVerificarPixRoute
+  ApiPublicCriarPixRoute: typeof ApiPublicCriarPixRoute
   ApiPublicSyncpayWebhookRoute: typeof ApiPublicSyncpayWebhookRoute
+  ApiPublicVerificarPixRoute: typeof ApiPublicVerificarPixRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -91,18 +91,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/verificar-pix': {
-      id: '/api/verificar-pix'
-      path: '/api/verificar-pix'
-      fullPath: '/api/verificar-pix'
-      preLoaderRoute: typeof ApiVerificarPixRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/criar-pix': {
-      id: '/api/criar-pix'
-      path: '/api/criar-pix'
-      fullPath: '/api/criar-pix'
-      preLoaderRoute: typeof ApiCriarPixRouteImport
+    '/api/public/verificar-pix': {
+      id: '/api/public/verificar-pix'
+      path: '/api/public/verificar-pix'
+      fullPath: '/api/public/verificar-pix'
+      preLoaderRoute: typeof ApiPublicVerificarPixRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/syncpay-webhook': {
@@ -112,14 +105,21 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicSyncpayWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/criar-pix': {
+      id: '/api/public/criar-pix'
+      path: '/api/public/criar-pix'
+      fullPath: '/api/public/criar-pix'
+      preLoaderRoute: typeof ApiPublicCriarPixRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ApiCriarPixRoute: ApiCriarPixRoute,
-  ApiVerificarPixRoute: ApiVerificarPixRoute,
+  ApiPublicCriarPixRoute: ApiPublicCriarPixRoute,
   ApiPublicSyncpayWebhookRoute: ApiPublicSyncpayWebhookRoute,
+  ApiPublicVerificarPixRoute: ApiPublicVerificarPixRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
