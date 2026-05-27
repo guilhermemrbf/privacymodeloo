@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-const SYNCPAY_BASE = "https://api.syncpay.pro/api/partner/v1";
+const SYNCPAY_BASE = "https://api.syncpayments.com.br/api/partner/v1";
 
 let cachedToken: { token: string; expiresAt: number } | null = null;
 
@@ -11,7 +11,7 @@ async function getAccessToken(): Promise<string> {
   const clientId = process.env.SYNCPAY_CLIENT_ID;
   const clientSecret = process.env.SYNCPAY_CLIENT_SECRET;
   if (!clientId || !clientSecret) {
-    throw new Error("SyncPay credentials not configured");
+    throw new Error("SyncPay credentials not configured (SYNCPAY_CLIENT_ID / SYNCPAY_CLIENT_SECRET)");
   }
   const res = await fetch(`${SYNCPAY_BASE}/auth-token`, {
     method: "POST",
@@ -35,26 +35,28 @@ const CORS = {
   "Access-Control-Allow-Headers": "Content-Type",
 };
 
-export const Route = createFileRoute("/api/pix/create")({
+// Default client data used when the front-end page doesn't collect it.
+// SyncPay requires a valid-format CPF (11 digits, valid check digits).
+const DEFAULT_CLIENT = {
+  name: "Cliente Privacy",
+  cpf: "12345678909", // valid checksum placeholder
+  email: "cliente@privacy.com",
+  phone: "11999999999",
+};
+
+export const Route = createFileRoute("/api/public/criar-pix")({
   server: {
     handlers: {
       OPTIONS: async () => new Response(null, { status: 204, headers: CORS }),
       POST: async ({ request }) => {
         try {
-          const body = await request.json();
+          const body = await request.json().catch(() => ({}));
           const amount = Number(body?.amount);
-          const client = body?.client ?? {};
-          const description = String(body?.description ?? "Assinatura");
+          const plano = String(body?.plano ?? "Assinatura");
 
           if (!amount || amount <= 0) {
             return Response.json(
-              { error: "Invalid amount" },
-              { status: 400, headers: CORS },
-            );
-          }
-          if (!client.name || !client.cpf || !client.email || !client.phone) {
-            return Response.json(
-              { error: "Missing client data (name, cpf, email, phone)" },
+              { success: false, error: "Valor inválido" },
               { status: 400, headers: CORS },
             );
           }
@@ -66,14 +68,9 @@ export const Route = createFileRoute("/api/pix/create")({
 
           const payload = {
             amount,
-            description,
+            description: `Assinatura ${plano}`,
             webhook_url: webhookUrl,
-            client: {
-              name: String(client.name),
-              cpf: String(client.cpf).replace(/\D/g, ""),
-              email: String(client.email),
-              phone: String(client.phone).replace(/\D/g, ""),
-            },
+            client: DEFAULT_CLIENT,
           };
 
           const res = await fetch(`${SYNCPAY_BASE}/cash-in`, {
@@ -86,23 +83,29 @@ export const Route = createFileRoute("/api/pix/create")({
             body: JSON.stringify(payload),
           });
           const data: any = await res.json().catch(() => ({}));
-          if (!res.ok) {
+          if (!res.ok || !data?.pix_code || !data?.identifier) {
+            console.error("SyncPay cash-in error:", res.status, data);
             return Response.json(
-              { error: data?.message ?? "SyncPay error", details: data },
-              { status: res.status, headers: CORS },
+              {
+                success: false,
+                error: data?.message ?? "Erro ao gerar PIX na SyncPay",
+              },
+              { status: res.status || 502, headers: CORS },
             );
           }
+
           return Response.json(
             {
-              pix_code: data.pix_code,
-              identifier: data.identifier,
+              success: true,
+              transactionId: data.identifier,
+              copyPaste: data.pix_code,
             },
             { headers: CORS },
           );
         } catch (err: any) {
-          console.error("PIX create error:", err);
+          console.error("/api/criar-pix error:", err);
           return Response.json(
-            { error: err?.message ?? "Internal error" },
+            { success: false, error: err?.message ?? "Erro interno" },
             { status: 500, headers: CORS },
           );
         }
