@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-const SYNCPAY_BASE = "https://api.syncpay.pro/api/partner/v1";
+const SYNCPAY_BASE = "https://api.syncpayments.com.br/api/partner/v1";
 
 let cachedToken: { token: string; expiresAt: number } | null = null;
 
