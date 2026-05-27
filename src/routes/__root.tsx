@@ -72,14 +72,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "privacy" },
+      { name: "description", content: "Page Replica Studio clones sales pages from provided HTML and links, preserving original design elements." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "privacy" },
+      { property: "og:description", content: "Page Replica Studio clones sales pages from provided HTML and links, preserving original design elements." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "privacy" },
+      { name: "twitter:description", content: "Page Replica Studio clones sales pages from provided HTML and links, preserving original design elements." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/eee1cb02-5ed9-4dd7-b4c9-5211c7995e22/id-preview-e3e75cbf--1a84a55b-d8d5-458e-b9b1-147b4b186c49.lovable.app-1779908399411.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/eee1cb02-5ed9-4dd7-b4c9-5211c7995e22/id-preview-e3e75cbf--1a84a55b-d8d5-458e-b9b1-147b4b186c49.lovable.app-1779908399411.png" },
     ],
     links: [
       {
